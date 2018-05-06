@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "vending_machine_kernel.h"
+#include "station.h"
 #include "stuff.h"
 
 namespace Ui {
@@ -29,14 +30,26 @@ private slots:
 
     void on_Button_refund_clicked();
 
+    void on_Button_income_clicked();
+
+    void on_Button_insert_new_product_clicked();
+
 signals:
-    void sent_summ_to_kernel(double sum);
+    //Отправляет сумму в ядро автомата
+    void sent_summ_to_kernel(double);
+    //Нажате на секретную кнопку персоналом
+    void get_income_box(double);
+    //
+    void sent_new_type_to_station(QString&);
 
 private:
     Ui::MainWindow *ui;
 
+    void filling_comboBoxes(const QString &str);
+
     //Динамические объекты
     Vending_Machine_kernel *_kernel;
+    Station *_station;
     Stuff *_stuff;
 };
 

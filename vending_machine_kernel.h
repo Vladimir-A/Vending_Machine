@@ -2,10 +2,17 @@
 #define VENDING_MACHINE_KERNEL_H
 
 #include <QThread>
+#include <QVector>
 
-#include "station.h"
+//class Vending_machine;
+struct base_information {
+    double _sum_in_dispay = 0;
 
-class Vending_machine;
+    double _sum = 0;
+
+    QVector<Product> vector_products[5];
+};
+
 class Vending_Machine_kernel : public QThread
 {
     Q_OBJECT
@@ -13,14 +20,20 @@ class Vending_Machine_kernel : public QThread
 public:
     Vending_Machine_kernel();
 
+    double print_sum() const;
+
     void run();
 
 public slots:
+    //Учёт суммы в автоматe
     void get_sum (double sum);
 
+
 private:
-    Station *_station;
-    double _sum = 0;
+    const unsigned int max_size = 20;
+    base_information base_info;
+
+
 
 };
 

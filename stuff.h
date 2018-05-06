@@ -10,10 +10,17 @@ class Stuff : public QThread
 public:
     Stuff(QObject *parent = nullptr);
 
+    double print_cash() const;
+
     void run();
 
+public slots:
+    //Взять выручку из автомата
+    void get_income(double sum);
+
 private:
-    unsigned long cash;
+    //Сумма на руках у сотрудников
+    double cash = 0;
 };
 
 #endif // STUFF_H

@@ -2,8 +2,12 @@
 
 Vending_Machine_kernel::Vending_Machine_kernel()
 {
-    _station = new Station;
 
+}
+
+double Vending_Machine_kernel::print_sum() const
+{
+    return base_info._sum;
 }
 
 void Vending_Machine_kernel::run()
@@ -17,5 +21,8 @@ void Vending_Machine_kernel::run()
 
 void Vending_Machine_kernel::get_sum(double sum)
 {
-    _sum += sum;
+    base_info._sum_in_dispay += sum;
 }
+
+
+
