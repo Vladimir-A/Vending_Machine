@@ -7,7 +7,13 @@ Vending_machine::Vending_machine(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //ui->LED1->setTristate();
+    //начальная установка сигналов
+    ui->LED1->click();
+    ui->LED2->click();
+    ui->LED3->click();
+    ui->LED4->click();
+    ui->LED5->click();
+
     ui->refund->setReadOnly(true);
     ui->line_income->setReadOnly(true);
 
@@ -33,7 +39,14 @@ Vending_machine::Vending_machine(QWidget *parent) :
     connect(this,SIGNAL(sent_message_to_kernel_download_new_product(QString&,Station*)),_kernel,SLOT(get_product(QString&,Station*)));
 
     //
-    connect(_kernel,SIGNAL(product_to_box(QPair<QString,uint>,int)),this,SLOT(filling_boxmachine(QPair<QString,uint>,int)));
+    connect(this,SIGNAL(sent_message_to_kernel_buy_product(int)),_kernel,SLOT(give_one_product(int)));
+
+    //
+    connect(_kernel,SIGNAL(product_to_box(QPair<QString,uint>,int,double,int)),this,SLOT(filling_boxmachine(QPair<QString,uint>,int,double,int)));
+
+    //Cигнал для лотка(выдача)
+    connect(_kernel,SIGNAL(_take(int)),this,SLOT(take(int)));
+    connect(_kernel,SIGNAL(_signal(int,bool)),this,SLOT(signal_(int,bool)));
 }
 
 Vending_machine::~Vending_machine()
@@ -52,10 +65,144 @@ void Vending_machine::filling_comboBoxes(const QString &str)
 
 void Vending_machine::on_Button1_clicked()
 {
-    //ui->LED1->toggle();
-    ui->Btray1->setEnabled(true);
+    emit sent_message_to_kernel_buy_product(1);
+}
 
 
+void Vending_machine::on_Btray1_clicked()
+{
+    ui->Btray1->setEnabled(false);
+    ui->Btray1->setText("");
+}
+
+void Vending_machine::on_Button2_clicked()
+{
+    emit sent_message_to_kernel_buy_product(2);
+}
+
+void Vending_machine::on_Btray2_clicked()
+{
+    ui->Btray2->setEnabled(false);
+    ui->Btray2->setText("");
+}
+
+void Vending_machine::on_Button3_clicked()
+{
+    emit sent_message_to_kernel_buy_product(3);
+}
+
+void Vending_machine::on_Btray3_clicked()
+{
+    ui->Btray3->setEnabled(false);
+    ui->Btray3->setText("");
+}
+
+void Vending_machine::on_Button4_clicked()
+{
+    emit sent_message_to_kernel_buy_product(4);
+}
+
+void Vending_machine::on_Btray4_clicked()
+{
+    ui->Btray4->setEnabled(false);
+    ui->Btray4->setText("");
+}
+
+void Vending_machine::on_Button5_clicked()
+{
+    emit sent_message_to_kernel_buy_product(5);
+}
+
+void Vending_machine::on_Btray5_clicked()
+{
+    ui->Btray5->setEnabled(false);
+    ui->Btray5->setText("");
+}
+
+void Vending_machine::take(int ch)
+{
+    switch (ch) {
+    case 1:
+        ui->Btray1->setEnabled(true);
+        ui->Btray1->setText("take");
+        break;
+    case 2:
+        ui->Btray2->setEnabled(true);
+        ui->Btray2->setText("take");
+        break;
+    case 3:
+        ui->Btray3->setEnabled(true);
+        ui->Btray3->setText("take");
+        break;
+    case 4:
+        ui->Btray4->setEnabled(true);
+        ui->Btray4->setText("take");
+        break;
+    case 5:
+        ui->Btray5->setEnabled(true);
+        ui->Btray5->setText("take");
+        break;
+    default:
+        break;
+    }
+}
+
+void Vending_machine::signal_(int ch, bool on_off)
+{
+    switch (ch) {
+    case 1:{
+        if (on_off){
+            if (ui->LED1->isChecked())
+                ui->LED1->click();
+        } else {
+            if (!ui->LED1->isChecked())
+                ui->LED1->click();
+        }
+        break;
+    }
+    case 2:{
+        if (on_off){
+            if (ui->LED2->isChecked())
+                ui->LED2->click();
+        } else {
+            if (!ui->LED2->isChecked())
+                ui->LED2->click();
+        }
+        break;
+    }
+    case 3:{
+        if (on_off){
+            if (ui->LED3->isChecked())
+                ui->LED3->click();
+        } else {
+            if (!ui->LED3->isChecked())
+                ui->LED3->click();
+        }
+        break;
+    }
+    case 4:{
+        if (on_off){
+            if (ui->LED4->isChecked())
+                ui->LED4->click();
+        } else {
+            if (!ui->LED4->isChecked())
+                ui->LED4->click();
+        }
+        break;
+    }
+    case 5:{
+        if (on_off){
+            if (ui->LED5->isChecked())
+                ui->LED5->click();
+        } else {
+            if (!ui->LED5->isChecked())
+                ui->LED5->click();
+        }
+        break;
+    }
+    default:
+        break;
+    }
 }
 
 void Vending_machine::on_sum50_clicked()
@@ -123,43 +270,41 @@ void Vending_machine::on_Binsert_product_clicked()
     emit sent_message_to_kernel_download_new_product(str,_station);
 }
 
-void Vending_machine::filling_boxmachine(QPair<QString, unsigned int> pairs, int ch)
+void Vending_machine::filling_boxmachine(QPair<QString, unsigned int> pairs, int _size, double _sum,int ch)
 {
     switch (ch) {
     case 0:
-        ui->product_status1->setValue(20);
+        ui->product_status1->setValue(_size);
         ui->price1->display(static_cast<int>(pairs.second));
         ui->Button1->setText(pairs.first);
+        ui->sum_total->display(_sum);
         break;
     case 1:
-        ui->product_status2->setValue(20);
+        ui->product_status2->setValue(_size);
         ui->price2->display(static_cast<int>(pairs.second));
         ui->Button2->setText(pairs.first);
+        ui->sum_total->display(_sum);
         break;
     case 2:
-        ui->product_status3->setValue(20);
+        ui->product_status3->setValue(_size);
         ui->price3->display(static_cast<int>(pairs.second));
         ui->Button3->setText(pairs.first);
+        ui->sum_total->display(_sum);
         break;
     case 3:
-        ui->product_status4->setValue(20);
+        ui->product_status4->setValue(_size);
         ui->price4->display(static_cast<int>(pairs.second));
         ui->Button4->setText(pairs.first);
+        ui->sum_total->display(_sum);
         break;
     case 4:
-        ui->product_status5->setValue(20);
+        ui->product_status5->setValue(_size);
         ui->price5->display(static_cast<int>(pairs.second));
         ui->Button5->setText(pairs.first);
+        ui->sum_total->display(_sum);
         break;
     default:
         break;
     }
 }
-
-
-
-
-
-
-
 

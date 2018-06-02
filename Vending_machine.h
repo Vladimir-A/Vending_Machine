@@ -24,6 +24,14 @@ public:
 private slots:
     void on_Button1_clicked();
 
+    void on_Button2_clicked();
+
+    void on_Button3_clicked();
+
+    void on_Button4_clicked();
+
+    void on_Button5_clicked();
+
     void on_sum50_clicked();
 
     void on_sum100_clicked();
@@ -38,7 +46,21 @@ private slots:
 
     void on_Binsert_product_clicked();
 
-    void filling_boxmachine(QPair<QString, unsigned int> pairs,int ch);
+    void filling_boxmachine(QPair<QString, unsigned int> pairs,int _size,double _sum,int ch);
+
+    void on_Btray1_clicked();
+
+    void on_Btray2_clicked();
+
+    void on_Btray3_clicked();
+
+    void on_Btray4_clicked();
+
+    void on_Btray5_clicked();
+
+    void take(int ch);
+
+    void signal_(int ch, bool on_off);
 
 signals:
     //Отправляет сумму в ядро автомата
@@ -49,6 +71,8 @@ signals:
     void sent_new_type_to_station(QString&);  
     //Запрос в ядро на загрузку товаров
     void sent_message_to_kernel_download_new_product(QString&,Station*);
+    //Покупка товара
+    void sent_message_to_kernel_buy_product(int);
 
 private:
     Ui::MainWindow *ui;
