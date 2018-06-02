@@ -10,6 +10,15 @@ void Station::run()
 
 }
 
+unsigned int Station::get_info(QString &str)
+{
+    try{
+        return types.at(str);
+    } catch(std::exception &ex) {
+        return 0;
+    }
+}
+
 void Station::new_type(QString &str)
 {
     //получение имени

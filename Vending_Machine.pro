@@ -28,15 +28,13 @@ SOURCES += \
     vending_machine_kernel.cpp \
     Vending_machine.cpp \
     station.cpp \
-    stuff.cpp \
-    product.cpp
+    stuff.cpp
 
 HEADERS += \
     vending_machine_kernel.h \
     Vending_machine.h \
     station.h \
-    stuff.h \
-    product.h
+    stuff.h
 
 FORMS += \
         mainwindow.ui

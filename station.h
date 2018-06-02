@@ -14,6 +14,8 @@ public:
 
     void run();
 
+    unsigned int get_info(QString &str);
+
 public slots:
     void new_type(QString &str);
 

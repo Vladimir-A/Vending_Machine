@@ -17,13 +17,23 @@ Vending_machine::Vending_machine(QWidget *parent) :
     _station = new Station;
     _stuff   = new Stuff;
 
+    //Танец с бубном, для системы метакомпиляции Qt
+    qRegisterMetaType< QPair<QString,uint>  >("Pair");
+
     //Связь автомата и ядра, записывает в ядро сумму которая введена и считает общую
     connect(this,SIGNAL(sent_summ_to_kernel(double)),_kernel,SLOT(get_sum(double)));
 
     //Нажате на кнопики выручки сотрудниками
     connect(this,SIGNAL(get_income_box(double)),_stuff,SLOT(get_income(double)));
 
+    //
     connect(this,SIGNAL(sent_new_type_to_station(QString&)),_station,SLOT(new_type(QString&)));
+
+    //Связь ядра и коробки по добавлению нового продукта
+    connect(this,SIGNAL(sent_message_to_kernel_download_new_product(QString&,Station*)),_kernel,SLOT(get_product(QString&,Station*)));
+
+    //
+    connect(_kernel,SIGNAL(product_to_box(QPair<QString,uint>,int)),this,SLOT(filling_boxmachine(QPair<QString,uint>,int)));
 }
 
 Vending_machine::~Vending_machine()
@@ -42,8 +52,9 @@ void Vending_machine::filling_comboBoxes(const QString &str)
 
 void Vending_machine::on_Button1_clicked()
 {
-    ui->LED1->toggle();
+    //ui->LED1->toggle();
     ui->Btray1->setEnabled(true);
+
 
 }
 
@@ -99,3 +110,56 @@ void Vending_machine::on_Button_insert_new_product_clicked()
     ui->Name_product->clear();
     ui->Prise_product->clear();
 }
+
+void Vending_machine::on_Binsert_product_clicked()
+{
+    QString  str;
+    str.push_back(ui->comboBox1->currentText());    str.push_back('-');
+    str.push_back(ui->comboBox2->currentText());    str.push_back('-');
+    str.push_back(ui->comboBox3->currentText());    str.push_back('-');
+    str.push_back(ui->comboBox4->currentText());    str.push_back('-');
+    str.push_back(ui->comboBox5->currentText());
+
+    emit sent_message_to_kernel_download_new_product(str,_station);
+}
+
+void Vending_machine::filling_boxmachine(QPair<QString, unsigned int> pairs, int ch)
+{
+    switch (ch) {
+    case 0:
+        ui->product_status1->setValue(20);
+        ui->price1->display(static_cast<int>(pairs.second));
+        ui->Button1->setText(pairs.first);
+        break;
+    case 1:
+        ui->product_status2->setValue(20);
+        ui->price2->display(static_cast<int>(pairs.second));
+        ui->Button2->setText(pairs.first);
+        break;
+    case 2:
+        ui->product_status3->setValue(20);
+        ui->price3->display(static_cast<int>(pairs.second));
+        ui->Button3->setText(pairs.first);
+        break;
+    case 3:
+        ui->product_status4->setValue(20);
+        ui->price4->display(static_cast<int>(pairs.second));
+        ui->Button4->setText(pairs.first);
+        break;
+    case 4:
+        ui->product_status5->setValue(20);
+        ui->price5->display(static_cast<int>(pairs.second));
+        ui->Button5->setText(pairs.first);
+        break;
+    default:
+        break;
+    }
+}
+
+
+
+
+
+
+
+

@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QStack>
+#include <QMetaType>
 
 #include "vending_machine_kernel.h"
 #include "station.h"
@@ -34,13 +36,19 @@ private slots:
 
     void on_Button_insert_new_product_clicked();
 
+    void on_Binsert_product_clicked();
+
+    void filling_boxmachine(QPair<QString, unsigned int> pairs,int ch);
+
 signals:
     //Отправляет сумму в ядро автомата
     void sent_summ_to_kernel(double);
     //Нажате на секретную кнопку персоналом
     void get_income_box(double);
-    //
-    void sent_new_type_to_station(QString&);
+    //Добавляет инофрмацию о новом продуктне на станцию
+    void sent_new_type_to_station(QString&);  
+    //Запрос в ядро на загрузку товаров
+    void sent_message_to_kernel_download_new_product(QString&,Station*);
 
 private:
     Ui::MainWindow *ui;
