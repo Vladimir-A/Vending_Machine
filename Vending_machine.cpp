@@ -249,6 +249,13 @@ void Vending_machine::on_Button_insert_new_product_clicked()
     filling_comboBoxes(str);
 
     str.push_back(" - ");
+    bool test_uint;
+    ui->Prise_product->displayText().toUInt(&test_uint);
+    if ((ui->Prise_product->displayText() == "") || (!test_uint)) {
+        ui->Name_product->clear();
+        ui->Prise_product->clear();
+        return;
+    }
     str.push_back(ui->Prise_product->displayText());
     ui->list_product->addItem(str);
 

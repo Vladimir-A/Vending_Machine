@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -10,8 +13,9 @@
     <height>511</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>MainWindow</string>
+  <property name="windowIcon">
+   <iconset resource="res.qrc">
+    <normaloff>:/new/logo/VM.png</normaloff>:/new/logo/VM.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_2">
@@ -871,11 +875,42 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
+  <tabstop>Btray1</tabstop>
   <tabstop>Button1</tabstop>
+  <tabstop>Btray2</tabstop>
   <tabstop>Button2</tabstop>
+  <tabstop>Btray3</tabstop>
+  <tabstop>Button3</tabstop>
+  <tabstop>Btray4</tabstop>
   <tabstop>Button4</tabstop>
+  <tabstop>Btray5</tabstop>
   <tabstop>Button5</tabstop>
+  <tabstop>refund</tabstop>
+  <tabstop>Button_insert_new_product</tabstop>
+  <tabstop>comboBox1</tabstop>
+  <tabstop>LED1</tabstop>
+  <tabstop>LED5</tabstop>
+  <tabstop>Stages</tabstop>
+  <tabstop>LED3</tabstop>
+  <tabstop>Button_refund</tabstop>
+  <tabstop>sum50</tabstop>
+  <tabstop>sum100</tabstop>
+  <tabstop>sum500</tabstop>
+  <tabstop>list_product</tabstop>
+  <tabstop>LED4</tabstop>
+  <tabstop>Name_product</tabstop>
+  <tabstop>Prise_product</tabstop>
+  <tabstop>comboBox3</tabstop>
+  <tabstop>LED2</tabstop>
+  <tabstop>comboBox4</tabstop>
+  <tabstop>comboBox5</tabstop>
+  <tabstop>comboBox2</tabstop>
+  <tabstop>Binsert_product</tabstop>
+  <tabstop>Button_income</tabstop>
+  <tabstop>line_income</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections/>
 </ui>

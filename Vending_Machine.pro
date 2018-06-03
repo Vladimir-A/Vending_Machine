@@ -38,3 +38,10 @@ HEADERS += \
 
 FORMS += \
         mainwindow.ui
+
+STATECHARTS +=
+
+RESOURCES += \
+    res.qrc
+
+DISTFILES +=
