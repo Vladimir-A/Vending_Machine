@@ -32,20 +32,21 @@ Vending_machine::Vending_machine(QWidget *parent) :
     //Нажате на кнопики выручки сотрудниками
     connect(this,SIGNAL(get_income_box(double)),_stuff,SLOT(get_income(double)));
 
-    //
+    //Добавление нового продукта
     connect(this,SIGNAL(sent_new_type_to_station(QString&)),_station,SLOT(new_type(QString&)));
 
     //Связь ядра и коробки по добавлению нового продукта
     connect(this,SIGNAL(sent_message_to_kernel_download_new_product(QString&,Station*)),_kernel,SLOT(get_product(QString&,Station*)));
 
-    //
+    //Сообщение о покупки товара ядру
     connect(this,SIGNAL(sent_message_to_kernel_buy_product(int)),_kernel,SLOT(give_one_product(int)));
 
-    //
+    //Связь ядра и коробки
     connect(_kernel,SIGNAL(product_to_box(QPair<QString,uint>,int,double,int)),this,SLOT(filling_boxmachine(QPair<QString,uint>,int,double,int)));
 
     //Cигнал для лотка(выдача)
     connect(_kernel,SIGNAL(_take(int)),this,SLOT(take(int)));
+    //Сигнал для лампочки показывающей, что лоток пуст
     connect(_kernel,SIGNAL(_signal(int,bool)),this,SLOT(signal_(int,bool)));
 }
 
