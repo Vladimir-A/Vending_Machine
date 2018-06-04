@@ -47,7 +47,7 @@ void Vending_Machine_kernel::run()
             emit product_to_box(base_info.vector_products[_num_lot][0],base_info.vector_products[_num_lot].size(),base_info._sum_in_dispay,_num_lot);
             emit _take(_num_lot+1);
         } else {
-            emit product_to_box({"",0},0,0,_num_lot);
+            emit product_to_box({"",0},0,base_info._sum_in_dispay,_num_lot);
             emit _signal(_num_lot+1,false);
         }
         break;
