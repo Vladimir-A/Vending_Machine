@@ -6,6 +6,7 @@
 #include <QString>
 #include <map>
 #include <QMetaType>
+#include <QPair>
 
 #include "station.h"
 

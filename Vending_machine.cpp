@@ -7,6 +7,11 @@ Vending_machine::Vending_machine(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //Танец с бубном, для системы метакомпиляции Qt
+    //qRegisterMetaType<QPair<QString,uint>>("Pair");
+    //Танец №2 с бубном, для системы метакомпиляции Qt после обновления до Qt 5.11.0
+    qRegisterMetaType<QPair<QString,uint>>("QPair<QString,uint>");
+
     //начальная установка сигналов
     ui->LED1->click();
     ui->LED2->click();
@@ -23,8 +28,6 @@ Vending_machine::Vending_machine(QWidget *parent) :
     _station = new Station;
     _stuff   = new Stuff;
 
-    //Танец с бубном, для системы метакомпиляции Qt
-    qRegisterMetaType< QPair<QString,uint>  >("Pair");
 
     //Связь автомата и ядра, записывает в ядро сумму которая введена и считает общую
     connect(this,SIGNAL(sent_summ_to_kernel(double)),_kernel,SLOT(get_sum(double)));
@@ -247,7 +250,7 @@ void Vending_machine::on_Button_insert_new_product_clicked()
         return;
     }
 
-    filling_comboBoxes(str);
+    QString buf = str;
 
     str.push_back(" - ");
     bool test_uint;
@@ -260,6 +263,7 @@ void Vending_machine::on_Button_insert_new_product_clicked()
     str.push_back(ui->Prise_product->displayText());
     ui->list_product->addItem(str);
 
+    filling_comboBoxes(buf);
     emit sent_new_type_to_station(str);
 
     ui->Name_product->clear();

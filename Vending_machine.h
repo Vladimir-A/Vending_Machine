@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QStack>
 #include <QMetaType>
+#include <QPair>
 
 #include "vending_machine_kernel.h"
 #include "station.h"
